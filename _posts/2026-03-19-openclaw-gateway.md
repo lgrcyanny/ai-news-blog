@@ -1,4 +1,5 @@
 ---
+layout: post
 title: OpenClaw Gateway 架构深度解析
 date: 2026-03-19
 author: Cyanny

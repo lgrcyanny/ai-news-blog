@@ -1,4 +1,5 @@
 ---
+layout: post
 title: AI 顶会研究趋势调研报告 (2026)
 date: 2026-03-19
 author: Cyanny

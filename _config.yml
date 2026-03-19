@@ -1,0 +1,19 @@
+title: AI 每日资讯
+description: AI 行业资讯与深度解析
+theme: jekyll-theme-minimal
+show_downloads: false
+google_analytics:
+plugins:
+  - jekyll-relative-links
+relative_links:
+  enabled: true
+  collections: true
+include:
+  - _posts
+defaults:
+  - scope:
+      path: "_posts"
+      type: "posts"
+    values:
+      layout: "post"
+      title: "大模型专栏"
