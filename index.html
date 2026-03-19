@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 每日资讯</title>
+    <style>
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a24;
+            --text-primary: #e8e8ed;
+            --text-secondary: #8888a0;
+            --accent: #00d4aa;
+            --accent-dim: #00a88a;
+            --border: #2a2a3a;
+            --gradient: linear-gradient(135deg, #00d4aa 0%, #0088ff 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+        
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        
+        .date {
+            color: var(--accent);
+            font-size: 0.85rem;
+            margin-top: 8px;
+            font-family: 'SF Mono', Monaco, monospace;
+        }
+        
+        .news-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .news-item:hover {
+            border-color: var(--accent-dim);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 212, 170, 0.1);
+        }
+        
+        .news-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-primary);
+        }
+        
+        .news-title a {
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        .news-title a:hover {
+            color: var(--accent);
+        }
+        
+        .news-meta {
+            display: flex;
+            gap: 12px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+        
+        .news-source {
+            color: var(--accent-dim);
+        }
+        
+        .news-description {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: var(--gradient);
+            border-radius: 2px;
+        }
+        
+        .highlight {
+            background: var(--bg-secondary);
+            border-left: 3px solid var(--accent);
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 30px 0;
+        }
+        
+        .highlight .news-item {
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin-bottom: 12px;
+        }
+        
+        .highlight .news-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+        }
+        
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 16px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .news-item {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI 每日资讯</h1>
+            <p class="subtitle">Artificial Intelligence Industry News</p>
+            <p class="date" id="current-date"></p>
+        </header>
+
+        <main id="news-container">
+            <!-- News will be populated here -->
+        </main>
+
+        <footer>
+            <p>每日自动更新 · Powered by Google News RSS</p>
+            <p><a href="https://github.com">GitHub</a></p>
+        </footer>
+    </div>
+
+    <script>
+        // Set current date
+        const date = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+        document.getElementById('current-date').textContent = date.toLocaleDateString('zh-CN', options);
+
+        // Fetch news from RSS (client-side via CORS proxy)
+        async function fetchNews() {
+            const container = document.getElementById('news-container');
+            
+            try {
+                // Using cors-anywhere proxy or rss2json
+                const rssUrl = encodeURIComponent('https://news.google.com/rss/search?q=AI%20artificial%20intelligence%202026&hl=zh-CN&gl=CN');
+                const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`;
+                
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                
+                if (data.status === 'ok' && data.items) {
+                    renderNews(data.items);
+                } else {
+                    container.innerHTML = '<p style="text-align:center;color:var(--text-secondary)">暂无资讯</p>';
+                }
+            } catch (error) {
+                console.error('Error fetching news:', error);
+                container.innerHTML = '<p style="text-align:center;color:var(--text-secondary)">加载失败</p>';
+            }
+        }
+
+        function renderNews(items) {
+            const container = document.getElementById('news-container');
+            
+            // Highlight section (first 3 items)
+            const highlightItems = items.slice(0, 3);
+            const normalItems = items.slice(3);
+            
+            let html = '';
+            
+            // Highlights
+            if (highlightItems.length > 0) {
+                html += '<h2 class="section-title">核心资讯</h2>';
+                html += '<div class="highlight">';
+                highlightItems.forEach(item => {
+                    html += createNewsItem(item);
+                });
+                html += '</div>';
+            }
+            
+            // All news
+            if (normalItems.length > 0) {
+                html += '<h2 class="section-title">更多资讯</h2>';
+                normalItems.forEach(item => {
+                    html += createNewsItem(item);
+                });
+            }
+            
+            container.innerHTML = html;
+        }
+
+        function createNewsItem(item) {
+            const date = new Date(item.pubDate);
+            const dateStr = date.toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' });
+            
+            return `
+                <article class="news-item">
+                    <h3 class="news-title">
+                        <a href="${item.link}" target="_blank" rel="noopener">${item.title}</a>
+                    </h3>
+                    <div class="news-meta">
+                        <span class="news-source">${item.source || 'Unknown'}</span>
+                        <span>·</span>
+                        <span>${dateStr}</span>
+                    </div>
+                    ${item.description ? `<p class="news-description">${stripHtml(item.description).slice(0, 150)}...</p>` : ''}
+                </article>
+            `;
+        }
+
+        function stripHtml(html) {
+            const tmp = document.createElement('div');
+            tmp.innerHTML = html;
+            return tmp.textContent || tmp.innerText || '';
+        }
+
+        // Load news on page load
+        fetchNews();
+    </script>
+</body>
+</html>
