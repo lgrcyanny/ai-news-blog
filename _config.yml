@@ -1,0 +1,36 @@
+# Site settings
+title: AI News Blog
+description: "每日 AI 新闻与技术解读"
+baseurl: ""
+url: "https://lgrcyanny.github.io"
+
+# Build settings
+theme: minima
+markdown: kramdown
+
+# Permalinks
+permalink: /:year-:month-:day-:title/
+
+# Collections
+collections:
+  posts:
+    output: true
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: post
+
+# Exclude files from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .git
+  - README.md
+
+# Timezone
+timezone: Asia/Shanghai
