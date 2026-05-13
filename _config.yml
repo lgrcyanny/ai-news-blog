@@ -1,11 +1,10 @@
 # Site settings
 title: AI News Blog
 description: "每日 AI 新闻与技术解读"
-baseurl: ""
-url: "https://lgrcyanny.github.io"
+baseurl: "/ai-news-blog"
+url: "https://www.cyanny.com"
 
 # Build settings
-theme: minima
 markdown: kramdown
 
 # Permalinks
@@ -20,6 +19,7 @@ collections:
 defaults:
   - scope:
       path: ""
+      type: "posts"
     values:
       layout: post
 

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title | escape }} - {{ site.title }}{% else %}{{ site.title }}{% endif %}</title>
+  <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #24292e;
+      --text-secondary: #586069;
+      --link: #0366d6;
+      --border: #e1e4e8;
+      --tag-bg: #f1f8ff;
+      --code-bg: #f6f8fa;
+      --max-width: 800px;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+    }
+    a { color: var(--link); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Header */
+    .site-header {
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 1rem;
+      text-align: center;
+    }
+    .site-header h1 { font-size: 1.8rem; margin-bottom: 0.3rem; }
+    .site-header p { color: var(--text-secondary); }
+    .site-nav {
+      max-width: var(--max-width);
+      margin: 0.5rem auto 0;
+      display: flex;
+      gap: 1.5rem;
+      justify-content: center;
+    }
+    .site-nav a { font-size: 0.9rem; }
+
+    /* Content */
+    .content {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 1.5rem 1rem;
+    }
+
+    /* Home page */
+    .post-card {
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .post-card:last-child { border-bottom: none; }
+    .post-date { color: var(--text-secondary); font-size: 0.85rem; }
+    .post-card h2 { margin: 0.3rem 0; font-size: 1.3rem; }
+    .post-card h2 a { color: var(--link); }
+    .post-excerpt { color: var(--text-secondary); margin-top: 0.5rem; }
+    .post-tags { margin-top: 0.5rem; }
+    .tag {
+      display: inline-block;
+      background: var(--tag-bg);
+      color: var(--link);
+      padding: 0.1rem 0.5rem;
+      border-radius: 3px;
+      font-size: 0.8rem;
+      margin-right: 0.3rem;
+    }
+
+    /* Post page */
+    .post-header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+    .post-header h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+    .post-meta { color: var(--text-secondary); font-size: 0.9rem; }
+    .post-body { line-height: 1.8; }
+    .post-body h1, .post-body h2 { margin: 1.5rem 0 0.8rem; }
+    .post-body h3, .post-body h4 { margin: 1.2rem 0 0.5rem; }
+    .post-body p { margin-bottom: 1rem; }
+    .post-body ul, .post-body ol { margin-bottom: 1rem; padding-left: 2rem; }
+    .post-body li { margin-bottom: 0.3rem; }
+    .post-body table { border-collapse: collapse; width: 100%; margin-bottom: 1rem; }
+    .post-body th, .post-body td { border: 1px solid var(--border); padding: 0.5rem 0.8rem; text-align: left; }
+    .post-body th { background: var(--code-bg); }
+    .post-body pre { background: var(--code-bg); padding: 1rem; border-radius: 5px; overflow-x: auto; margin-bottom: 1rem; }
+    .post-body code { background: var(--code-bg); padding: 0.1rem 0.3rem; border-radius: 3px; font-size: 0.9em; }
+    .post-body pre code { background: none; padding: 0; }
+    .post-body blockquote { border-left: 4px solid var(--border); padding-left: 1rem; color: var(--text-secondary); margin-bottom: 1rem; }
+    .post-body img { max-width: 100%; }
+
+    /* Footer */
+    .site-footer {
+      border-top: 1px solid var(--border);
+      padding: 1.5rem 1rem;
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      margin-top: 2rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .site-header h1 { font-size: 1.4rem; }
+      .post-body h1 { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <h1><a href="{{ '/' | relative_url }}">{{ site.title }}</a></h1>
+    <p>{{ site.description }}</p>
+    <nav class="site-nav">
+      <a href="{{ '/' | relative_url }}">首页</a>
+      <a href="{{ '/about/' | relative_url }}">关于</a>
+    </nav>
+  </header>
+
+  <main class="content">
+    {{ content }}
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 {{ site.title }} · Powered by Jekyll & GitHub Pages</p>
+  </footer>
+</body>
+</html>
